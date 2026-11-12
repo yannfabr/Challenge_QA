@@ -1,0 +1,96 @@
+name: Front Web Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      project:
+        description: 'Projeto/navegador a executar'
+        type: choice
+        options: [all, chromium, firefox, mobile-chrome]
+        default: all
+      grep:
+        description: 'Filtro por tag (ex.: @smoke, @a11y, @mobile). Vazio = todos'
+        type: string
+        default: ''
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: e2e (${{ matrix.project }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        # Cada projeto roda em um job separado (paralelismo entre jobs);
+        # dentro do job, o playwright.config limita a 2 workers.
+        project: ${{ fromJSON((github.event_name == 'workflow_dispatch' && inputs.project != 'all') && format('["{0}"]', inputs.project) || '["chromium","firefox","mobile-chrome"]') }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Obter versão do Playwright
+        id: pw
+        run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Cache dos navegadores
+        id: pw-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: pw-${{ runner.os }}-${{ steps.pw.outputs.version }}-${{ matrix.project }}
+
+      - name: Instalar navegador
+        run: |
+          BROWSER=$([ "${{ matrix.project }}" = "firefox" ] && echo firefox || echo chromium)
+          if [ "${{ steps.pw-cache.outputs.cache-hit }}" = "true" ]; then
+            npx playwright install-deps "$BROWSER"
+          else
+            npx playwright install --with-deps "$BROWSER"
+          fi
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Executar testes
+        env:
+          GREP: ${{ inputs.grep }}
+        run: |
+          if [ -n "$GREP" ]; then
+            npx playwright test --project="${{ matrix.project }}" --grep "$GREP" --pass-with-no-tests
+          else
+            npx playwright test --project="${{ matrix.project }}"
+          fi
+
+      - name: Publicar relatório HTML
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ matrix.project }}
+          path: playwright-report/
+          retention-days: 14
+
+      - name: Publicar evidências (traces, screenshots, vídeos, junit)
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.project }}
+          path: test-results/
+          retention-days: 14
+          if-no-files-found: ignore
