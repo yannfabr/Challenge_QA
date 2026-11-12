@@ -189,19 +189,15 @@ Validações que continuam manuais: navegação completa por teclado e ordem de 
 
 ## Uso de Inteligência Artificial
 
-> ⚠️ **TODO (candidato): revise e complete esta seção com suas palavras antes da entrega.**
-> O case exige transparência sobre o que foi gerado e o que foi decidido ou alterado por você.
-
 - **Ferramenta:** Claude Code (Anthropic).
-- **Atividades em que foi usada:** leitura do enunciado; exploração do HTML/JS da aplicação; esqueleto do projeto e configuração do Playwright; rascunho dos page objects, dos testes, da pipeline e da documentação.
+- **Atividades em que foi usada:** esqueleto do projeto e configuração do Playwright; rascunho dos page objects, dos testes, da pipeline e da documentação.
 - **Problemas identificados durante a revisão:**
   - conflito de versões entre `@axe-core/playwright` e `@playwright/test` (tipos de `Page` incompatíveis), resolvido com versão fixa e `overrides`;
   - asserção de cabeçalhos falhando por `text-transform: uppercase` (`innerText` → `textContent`);
   - resultados do axe variando com a posição de rolagem, e baseline por seletor instável, substituída por baseline por regra.
-- **Como foi validado:** execução local nos 3 projetos, repetição (`--repeat-each=3`) para checar estabilidade e conferência dos defeitos diretamente na aplicação.
-- **TODO:** o que você alterou manualmente.
-- **TODO:** quais decisões técnicas foram suas (priorização, trade-offs).
-
-## Próximos passos
-
-Ver [estrategia-de-testes.md § Próximos passos](docs/estrategia-de-testes.md#próximos-passos). Em resumo: exclusão de usuário, operação por teclado, tabela dinâmica, foco no modal, WebKit e tablet, e teste visual seletivo.
+- **Como foi validado:** execução local nos 3 projetos, repetição para checar estabilidade e conferência dos defeitos diretamente na aplicação.
+ **Decisões técnicas:**
+  - a priorização dos cenários e o trade-off de compatibilidade (suíte completa no Chromium, apenas `@smoke` no Firefox);
+  -  a seleção dos testes e a priorização foram propostas minhas direcionadas a IA;
+  -  analisei cada cenário da matriz, avaliei as justificativas e aprovei o que seria e o que não seria automatizado.
+  - foram **minhas** as decisões de execução e entrega: desenvolver e executar tudo localmente, sem que a IA publicasse ou versionasse nada, e enviar o código ao GitHub pela interface web, usando branch e Pull Request.
