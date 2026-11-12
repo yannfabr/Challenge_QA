@@ -196,7 +196,8 @@ Validações que continuam manuais: navegação completa por teclado e ordem de 
   - asserção de cabeçalhos falhando por `text-transform: uppercase` (`innerText` → `textContent`);
   - resultados do axe variando com a posição de rolagem, e baseline por seletor instável, substituída por baseline por regra.
 - **Como foi validado:** execução local nos 3 projetos, repetição para checar estabilidade e conferência dos defeitos diretamente na aplicação.
- **Decisões técnicas:**
+  
+ - **Decisões técnicas:**
   - a priorização dos cenários e o trade-off de compatibilidade (suíte completa no Chromium, apenas `@smoke` no Firefox);
   - a seleção dos testes e a priorização foram propostas pela IA; analisei cada cenário da matriz, avaliei as justificativas e aprovei o que seria e o que não seria automatizado.
   - foram **minhas** as decisões de execução e entrega: desenvolver e executar tudo localmente, sem que a IA publicasse ou versionasse nada, e enviar o código ao GitHub pela interface web, usando branch e Pull Request.
