@@ -200,3 +200,13 @@ Validações que continuam manuais: navegação completa por teclado e ordem de 
   - a priorização dos cenários e o trade-off de compatibilidade (suíte completa no Chromium, apenas `@smoke` no Firefox);
   - a seleção dos testes e a priorização foram propostas pela IA; analisei cada cenário da matriz, avaliei as justificativas e aprovei o que seria e o que não seria automatizado.
   - foram **minhas** as decisões de execução e entrega: desenvolver e executar tudo localmente, sem que a IA publicasse ou versionasse nada, e enviar o código ao GitHub pela interface web, usando branch e Pull Request.
+
+## Próximos passos
+
+1. **Exclusão de usuário (USR-09):** automatizar após definição de produto sobre confirmação antes de excluir.
+2. **Operação por teclado (FRM-08 / A11Y-03):** preencher e enviar o formulário usando apenas o teclado.
+3. **Tabela dinâmica (DYN-03):** validar a tabela com colunas embaralhadas, reaproveitando a busca de coluna pelo cabeçalho.
+4. **Foco no modal (A11Y-07):** validar foco inicial, fechamento com Esc e ausência de armadilha de teclado, após correção do A11Y-BUG-06.
+5. **Novos navegadores e resoluções:** adicionar WebKit (Safari) e um tablet (768 px, no limite do breakpoint).
+6. **Teste visual seletivo:** `toHaveScreenshot` apenas para o card da tabela em mobile.
+7. **Histórico de execuções:** acompanhar flakiness ao longo do tempo com um dashboard de resultados.
