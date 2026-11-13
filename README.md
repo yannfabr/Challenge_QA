@@ -187,6 +187,8 @@ Validações que continuam manuais: navegação completa por teclado e ordem de 
 - WebKit/Safari ainda não está configurado.
 - Ver também [estrategia-de-testes.md](docs/estrategia-de-testes.md#limitações-conhecidas).
 
+-  Como foi validado: execução local nos 3 projetos (chromium, firefox e mobile-chrome); execução de todos os testes em modo headed (npm run test:headed) para acompanhar visualmente cada passo na aplicação; repetição (--repeat-each=3) para verificar a estabilidade; conferência manual dos defeitos encontrados (BUG-01, BUG-02 e A11Y) diretamente na aplicação.
+
 ## Uso de Inteligência Artificial
 
 - **Ferramenta:** Claude Code (Anthropic).
