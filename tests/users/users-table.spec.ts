@@ -77,9 +77,19 @@ test.describe('Gerenciamento de usuários', () => {
   test('USR-05/06 ordena por nome e mantém a ordenação ao navegar entre páginas', async ({ usersPage }) => {
     const total = await usersPage.totalEntries();
 
-    await test.step('ordena por Name (desc) com dois cliques no cabeçalho', async () => {
+    // O indicador "↕" do cabeçalho não muda com a ordenação, então o estado
+    // é verificado pelos dados exibidos (expect.poll repete a leitura até estabilizar).
+    const isSorted = (names: string[], dir: 1 | -1) =>
+      names.every((n, i) => i === 0 || dir * names[i - 1].localeCompare(n) <= 0);
+
+    await test.step('1º clique em Name: ordem crescente', async () => {
       await usersPage.sortHeader('name').click();
+      await expect.poll(async () => isSorted(await usersPage.columnValues('Name'), 1)).toBe(true);
+    });
+
+    await test.step('2º clique em Name: ordem decrescente', async () => {
       await usersPage.sortHeader('name').click();
+      await expect.poll(async () => isSorted(await usersPage.columnValues('Name'), -1)).toBe(true);
     });
 
     const collected: string[] = [];
