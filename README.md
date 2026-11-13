@@ -187,8 +187,6 @@ Validações que continuam manuais: navegação completa por teclado e ordem de 
 - WebKit/Safari ainda não está configurado.
 - Ver também [estrategia-de-testes.md](docs/estrategia-de-testes.md#limitações-conhecidas).
 
--  Como foi validado: execução local nos 3 projetos (chromium, firefox e mobile-chrome); execução de todos os testes em modo headed (npm run test:headed) para acompanhar visualmente cada passo na aplicação; repetição (--repeat-each=3) para verificar a estabilidade; conferência manual dos defeitos encontrados (BUG-01, BUG-02 e A11Y) diretamente na aplicação.
-
 ## Uso de Inteligência Artificial
 
 - **Ferramenta:** Claude Code (Anthropic).
@@ -197,7 +195,7 @@ Validações que continuam manuais: navegação completa por teclado e ordem de 
   - conflito de versões entre `@axe-core/playwright` e `@playwright/test` (tipos de `Page` incompatíveis), resolvido com versão fixa e `overrides`;
   - asserção de cabeçalhos falhando por `text-transform: uppercase` (`innerText` → `textContent`);
   - resultados do axe variando com a posição de rolagem, e baseline por seletor instável, substituída por baseline por regra.
-- **Como foi validado:** execução local nos 3 projetos, repetição para checar estabilidade e conferência dos defeitos diretamente na aplicação.
+- **Como foi validado:** execução local nos 3 projetos (chromium, firefox e mobile-chrome); execução de todos os testes em modo headed (npm run test:headed) para acompanhar visualmente cada passo na aplicação; repetição (--repeat-each=3) para verificar a estabilidade; conferência manual dos defeitos encontrados (BUG-01, BUG-02 e A11Y) diretamente na aplicação.
   
  - **Decisões técnicas:**
   - a priorização dos cenários e o trade-off de compatibilidade (suíte completa no Chromium, apenas `@smoke` no Firefox);
