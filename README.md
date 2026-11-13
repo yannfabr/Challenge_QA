@@ -93,7 +93,7 @@ npx playwright show-trace test-results/<pasta-do-teste>/trace.zip
 | Relatório HTML | Sempre |
 | Screenshot | Em falha |
 | Vídeo | Mantido em falha |
-| Trace | No primeiro retry (CI) |
+| Trace | Mantido em falha |
 | JUnit XML | No CI (`test-results/junit.xml`) |
 | JSON do axe | Sempre, anexado ao teste T8 |
 | Anotações `known-bug` / `known-a11y-issue` | Sempre, visíveis no relatório |
@@ -195,12 +195,12 @@ Validações que continuam manuais: navegação completa por teclado e ordem de 
   - conflito de versões entre `@axe-core/playwright` e `@playwright/test` (tipos de `Page` incompatíveis), resolvido com versão fixa e `overrides`;
   - asserção de cabeçalhos falhando por `text-transform: uppercase` (`innerText` → `textContent`);
   - resultados do axe variando com a posição de rolagem, e baseline por seletor instável, substituída por baseline por regra.
-- **Como foi validado:** execução local nos 3 projetos (chromium, firefox e mobile-chrome); execução de todos os testes em modo headed (npm run test:headed) para acompanhar visualmente cada passo na aplicação; repetição (--repeat-each=3) para verificar a estabilidade; conferência manual dos defeitos encontrados (BUG-01, BUG-02 e A11Y) diretamente na aplicação.
-  
- - **Decisões técnicas:**
-  - a priorização dos cenários e o trade-off de compatibilidade (suíte completa no Chromium, apenas `@smoke` no Firefox);
-  - a seleção dos testes e a priorização foram propostas pela IA; analisei cada cenário da matriz, avaliei as justificativas e aprovei o que seria e o que não seria automatizado.
-  - foram **minhas** as decisões de execução e entrega: desenvolver e executar tudo localmente, sem que a IA publicasse ou versionasse nada, e enviar o código ao GitHub pela interface web, usando branch e Pull Request.
+- **Como foi validado:** execução local nos 3 projetos (chromium, firefox e mobile-chrome); execução de todos os testes em modo headed (`npm run test:headed`) para acompanhar visualmente cada passo na aplicação; repetição (`--repeat-each=3`) para verificar a estabilidade; conferência manual dos defeitos encontrados (BUG-01, BUG-02 e A11Y) diretamente na aplicação.
+- **Decisões técnicas:**
+  - a seleção dos testes, a priorização e o trade-off de compatibilidade (suíte completa no Chromium, apenas `@smoke` no Firefox) foram propostos pela IA; analisei cada cenário da matriz, avaliei as justificativas e aprovei o que seria e o que não seria automatizado;
+  - foram **minhas** as decisões de execução e entrega: desenvolver e executar tudo localmente, sem que a IA publicasse ou versionasse nada, e enviar o código ao GitHub, usando branch e Pull Request.
+- **Ajustes feitos por mim após a primeira entrega:** sincronização da pesquisa com `toHaveCount` antes de ler os dados; validação da ordenação crescente e decrescente pelos dados exibidos (o indicador "↕" do cabeçalho não muda); trace mantido em qualquer falha (`retain-on-failure`); correção dos IDs do teste dinâmico.
+- **Histórico do repositório:** os primeiros commits foram feitos pela interface web do GitHub e mantêm as mensagens padrão ("Add files via upload", "Update README.md"). Os commits seguintes usam mensagens descritivas.
 
 ## Próximos passos
 
