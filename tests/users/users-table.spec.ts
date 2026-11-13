@@ -44,7 +44,8 @@ test.describe('Gerenciamento de usuários', () => {
       const [existingName] = await usersPage.columnValues('Name');
 
       await test.step('pesquisa por um usuário existente', async () => {
-        await usersPage.search.fill(existingName);
+       await usersPage.search.fill(existingName);
+        await expect(usersPage.rows).toHaveCount(1);
         await expect(usersPage.rowContaining(existingName)).toHaveCount(1);
         for (const name of await usersPage.columnValues('Name')) {
           expect(name.toLowerCase()).toContain(existingName.toLowerCase());
