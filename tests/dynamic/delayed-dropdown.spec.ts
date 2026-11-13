@@ -6,7 +6,7 @@ import { expect, test } from '../../src/fixtures/test';
  * observáveis do componente (botão, loader e select habilitado).
  */
 test.describe('Componentes assíncronos', () => {
-  test('DYN-01/02/06/07 carrega opções sob demanda e permite selecionar uma delas', async ({ page }) => {
+  test('DYN-01/02/05/06/07: carrega opções sob demanda e permite selecionar uma delas', async ({ page }) => {
     await page.goto('/');
     const card = page.getByTestId('delayed-dropdown-card');
     const loadButton = card.getByRole('button', { name: 'Load Options' });
