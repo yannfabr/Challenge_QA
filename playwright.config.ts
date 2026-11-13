@@ -6,7 +6,7 @@ const isCI = !!process.env.CI;
  * Configuração centralizada da suíte.
  * - baseURL vem de variável de ambiente (com fallback para a aplicação pública).
  * - Paralelismo limitado: a aplicação é pública e de terceiros (ver restrições do case).
-* - Evidências: trace no primeiro retry, screenshot e vídeo somente em falha. → * - Evidências: trace, screenshot e vídeo somente em falha.
+* - Evidências: trace, screenshot e vídeo somente em falha.
 */
 export default defineConfig({
   testDir: './tests',
